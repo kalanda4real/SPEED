@@ -9,28 +9,32 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./speedfrontend  # frontend directory
 
     strategy:
       matrix:
         node-version: [18.x]
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Set up Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
-        run: npm install
-        working-directory: ./speedfrontend
+    - name: Install dependencies
+      run: npm install
 
-      - name: Run the tests
-        run: npm test
-        working-directory: ./speedfrontend
+    - name: Run the tests
+      run: npm test
 
-      - name: Build
-        run: npm run build
-        working-directory: ./speedfrontend
+    - name: Build
+      run: npm run build
+
+    # - name: Start project
+    #   run: npm start
