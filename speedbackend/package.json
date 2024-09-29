@@ -27,7 +27,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "backend": "^0.0.0",
     "mongodb": "^6.9.0",
-    "mongoose": "^8.6.3",
+    "mongoose": "^8.6.4",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
     "save": "^2.9.0"
