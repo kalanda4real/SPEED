@@ -1,8 +1,9 @@
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put } from "@nestjs/common";
 import { UserService } from "./user.service";
-import { CreateuserDto } from "./createuser.dto";
+import { CreateUserDto } from "./createuser.dto";
 import { error } from "console";
-import { NOTFOUND } from "dns";
+import { LoginUserDto } from "../login/login.dto";
+
 
 @Controller('api/users')
 export class UserController{
@@ -48,19 +49,28 @@ export class UserController{
     }
 
     @Post('/')
-    async addUser(@Body() createuser:CreateuserDto)
-    {
-        try{
-            await this.userservice.create(createuser);
-            return {message: 'User added to list'};
-        }catch{
+    async signup(@Body() createUserDto: CreateUserDto) {
+        try {
+            await this.userservice.create(createUserDto);
+            return { message: 'User successfully registered' };
+        } catch (error) {
             throw new HttpException(
-                {
-                    status:HttpStatus.BAD_REQUEST,
-                    error: 'User could be not added',
-                },
+                { status: HttpStatus.BAD_REQUEST, error: 'Registration failed' },
                 HttpStatus.BAD_REQUEST,
-                {cause:error},
+                { cause: error }
+            );
+        }
+    }
+
+    @Post('/')
+    async login(@Body() loginUserDto: LoginUserDto) {
+        try {
+            return this.userservice.login(loginUserDto);
+        } catch (error) {
+            throw new HttpException(
+                { status: HttpStatus.UNAUTHORIZED, error: 'Login failed' },
+                HttpStatus.UNAUTHORIZED,
+                { cause: error }
             );
         }
     }
@@ -68,7 +78,7 @@ export class UserController{
     @Put('/:id')
     async updateUser(
         @Param('id') id:string,
-        @Body() createuser:CreateuserDto,
+        @Body() createuser:CreateUserDto,
     ){
         try{
             await this.userservice.update(id, createuser);
@@ -85,19 +95,20 @@ export class UserController{
         }
     }
 
-    @Delete('/:id')
-    async deleteUser(@Param('id') id: string){
-        try{
-            return await await this.userservice.delete(id);
-        }catch{
-            throw new HttpException(
-                {
-                    status: HttpStatus.NOT_FOUND,
-                    error:'User cant be found'
-                },
-                HttpStatus.NOT_FOUND,
-                {cause:error},
-            );
-        }
+
+  @Delete('/:id')
+  async deleteUser(@Param('id') id: string) {
+    try {
+      return await this.userservice.delete(id);
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          error: 'User can\'t be found',
+        },
+        HttpStatus.NOT_FOUND,
+        { cause: error },
+      );
     }
+}
 }
