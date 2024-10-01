@@ -67,8 +67,6 @@ export class UserService{
         if (!user) {
             throw new UnauthorizedException('Invalid credentials');
         }
-
-        // Generate JWT
         const payload = { username: user.username, role: user.role };
         return {
             access_token: this.jwtService.sign(payload),

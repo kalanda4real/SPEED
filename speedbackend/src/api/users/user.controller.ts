@@ -48,24 +48,25 @@ export class UserController{
         }
     }
 
-    @Post('/')
+    @Post('/signup')
     async signup(@Body() createUserDto: CreateUserDto) {
         try {
             await this.userservice.create(createUserDto);
             return { message: 'User successfully registered' };
         } catch (error) {
             throw new HttpException(
-                { status: HttpStatus.BAD_REQUEST, error: 'Registration failed' },
+                { status: HttpStatus.BAD_REQUEST, error: 'Registration failed please enter correct Information' },
                 HttpStatus.BAD_REQUEST,
                 { cause: error }
             );
         }
     }
 
-    @Post('/')
+    @Post('/login')
     async login(@Body() loginUserDto: LoginUserDto) {
         try {
-            return this.userservice.login(loginUserDto);
+            await this.userservice.login(loginUserDto);
+            return { message: 'Login Successful'};
         } catch (error) {
             throw new HttpException(
                 { status: HttpStatus.UNAUTHORIZED, error: 'Login failed' },
