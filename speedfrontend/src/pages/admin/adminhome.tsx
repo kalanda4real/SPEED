@@ -10,13 +10,10 @@ export default function AdminHome() {
       </h3>
 
       <div className={styles.buttonContainer}>
-        <Link href="/manage-articles" passHref>
+        <Link href="/admin/adminarticles" passHref>
           <button className={styles.button}>Manage Articles</button>
         </Link>
-        <Link href="/view-analytics" passHref>
-          <button className={styles.button}>View Analytics</button>
-        </Link>
-        <Link href="/user-management" passHref>
+        <Link href="/admin/adminUser" passHref>
           <button className={styles.button}>User Management</button>
         </Link>
       </div>
@@ -29,7 +26,7 @@ export default function AdminHome() {
 
       <footer className={styles.footer}>
         <p>© 2024 Software Practice Empirical Evidence Database. By Azel Pheobe Martin Simar.</p>
-        <a href="/Home">About Us</a>
+        <a href="/">About Us</a>
       </footer>
     </div>
   );

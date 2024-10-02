@@ -8,7 +8,7 @@ type Props = {
 
 const NavBar = ({ children }: Props) => {
   const router = useRouter();
-  const noNavbarRoutes = ['/login', '/signup','/admin/adminhome'];
+  const noNavbarRoutes = ['/login', '/signup','/admin/adminhome', '/admin/adminUser','/admin/adminarticles'];
 
   if (noNavbarRoutes.includes(router.pathname)) {
     return null;
