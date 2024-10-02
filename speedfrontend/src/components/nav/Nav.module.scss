@@ -4,13 +4,14 @@
   top: 0;
   flex-direction: row;
   width: 100%;
-  background-color: rgb(122, 26, 149);
+  background-color:rgb(124, 130, 146);
   align-items: center;
   color: aliceblue;
   font-size: 1.5em;
   font-weight: bold;
   transition: top 0.5s;
   height: fit-content;
+  justify-content: flex-start; /* Ensures all items align to the left */
 }
 
 .hide {
@@ -56,6 +57,4 @@
   }
 }
 
-.end {
-  margin-left: auto;
-}
+

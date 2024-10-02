@@ -26,7 +26,6 @@ const NewDiscussion = () => {
     );
   };
 
-  // Some helper methods for the authors array
 
   const addAuthor = () => {
     setAuthors(authors.concat([""]));
@@ -44,7 +43,6 @@ const NewDiscussion = () => {
     );
   };
 
-  // Return the full form
 
   return (
     <div className="container">

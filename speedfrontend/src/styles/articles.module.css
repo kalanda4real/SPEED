@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 15%;
+    padding-left: 5%;
+    padding-right: 5%;
+    background-color: #bdbfc4;
+  }
+  .button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: rgb(137, 81, 152);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor:auto;
+    margin-top: 15px;
+    margin-left: 22px;
+  }
+  .button:hover {
+    background-color: #054283;
+  }
+  
+ 
+  

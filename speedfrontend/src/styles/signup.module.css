@@ -4,7 +4,7 @@
     padding: 100px 65px 200px 50px;
     text-align:center;
     font-family:'Courier New', Courier, monospace;
-    background-color:rgb(175, 207, 226);
+    background-color: #bdbfc4;
     font-size: 30px;
   }
   
@@ -36,7 +36,7 @@
     color: #fff;
     border: none;
     border-radius: 50px;
-    cursor:alias;
+    cursor:auto;
     margin-top: 15px;
     margin-left: 22px;
   }

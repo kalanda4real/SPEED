@@ -1,7 +1,7 @@
 import { GetStaticProps, NextPage } from "next";
 import SortableTable from "@/components/table/SortableTable";
 import styles from '@/styles/articles.module.css';
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 
 
 interface ArticlesInterface {
@@ -29,8 +29,9 @@ type ArticlesProps = {
   articles: ArticlesInterface[];
 };
 
+
 const Articles: NextPage<ArticlesProps> = ({ articles }) => {
-  const router = useRouter();
+    const router = useRouter();
   const headers: { key: keyof ArticlesInterface; label: string }[] = [
     { key: "title", label: "Title" },
     { key: "author", label: "Author" },
@@ -39,18 +40,26 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
     { key: "volume", label: "Volume" },
     { key: "number", label: "Number" },
     { key: "pages", label: "Pages" },
-    { key: "doi", label: "DOI" }
+    { key: "doi", label: "DOI" },
+    { key: "moderation_status", label: "Moderation Status" },
+    { key: "submitter_name", label: "Submitter Name" },
+    { key: "submitter_email", label: "Submitter Email" },
+    { key: "submitted_date", label: "Submitted Date" },
+    { key: "analysis_status", label: "Analysis Status" },
+    { key: "analysis_notes", label: "Analysis Notes" }
   ];
+
+
 
   return (
     <div className={styles.container}>
-      <h1>Articles List</h1>
-      <p>List of all articles avaiable on SPEED</p>
+      <h1>Articles Analyst View</h1>
+      <p>Page containing a table of articles :</p>
       <SortableTable headers={headers} data={articles} />
       <button
         className={styles.button} 
-        onClick={() => router.push('/articles/analyst')} >
-        Go to analyst View
+        onClick={() => router.push('/articles/modview')} >
+        Go to Mod View
       </button>
     </div>
   );
@@ -86,4 +95,3 @@ export const getStaticProps: GetStaticProps<ArticlesProps> = async () => {
 };
 
 export default Articles;
-

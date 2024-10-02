@@ -28,8 +28,8 @@ const Signup: React.FC = () => {
 
       const data = await response.json();
       console.log('Signup Success:', data);
-      setSuccessMessage('Signup successful! You can now log in.');
-      setErrorMessage(''); // Clear error message if successful
+      setSuccessMessage('Signup successful! You can now Proceed to the log in Page.');
+      setErrorMessage(''); 
 
     } catch (error) {
       console.error('Error during signup:', error);
