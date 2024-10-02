@@ -1,5 +1,5 @@
 import { GetStaticProps, NextPage } from "next";
-import SortableTable from "@/components/table/admintable";
+import SortableTable from "@/components/table/SortableTable";
 import styles from '@/styles/articles.module.css';
 import { useRouter } from "next/router";
 
@@ -23,31 +23,12 @@ const Users: NextPage<UsersProps> = ({ users }) => {
     { key: "role", label: "Role" },
   ];
 
-  
-  const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to delete this user from the database?")) {
-      try {
-        const response = await fetch(`http://localhost:8082/api/users/${id}`, {
-          method: "DELETE",
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to delete user');
-        }
-
-        
-        router.replace(router.asPath);
-      } catch (error) {
-        console.error('Error deleting user:', error);
-      }
-    }
-  };
 
   return (
     <div className={styles.container}>
       <h1>Admin View: Users List</h1>
       <p>List of all users on SPEED</p>
-      <SortableTable headers={headers} data={users} onDelete={handleDelete} />
+      <SortableTable headers={headers} data={users}/>
       <button
         className={styles.button} 
         onClick={() => router.push('/admin/adminhome')} 

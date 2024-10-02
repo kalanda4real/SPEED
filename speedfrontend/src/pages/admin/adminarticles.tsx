@@ -1,5 +1,5 @@
 import { GetStaticProps, NextPage } from "next";
-import SortableTable from '@/components/table/admintable';
+import SortableTable from '@/components/table/SortableTable';
 import styles from '@/styles/articles.module.css';
 import { useRouter } from "next/router";
 
@@ -48,31 +48,12 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 
   ];
 
-  // Function to delete an article
-  const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to delete this article from the database?")) {
-      try {
-        const response = await fetch(`http://localhost:8082/api/articles/${id}`, {
-          method: "DELETE",
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to delete article');
-        }
-
-        // Optionally, refresh the page or update the local state
-        router.replace(router.asPath);
-      } catch (error) {
-        console.error('Error deleting article:', error);
-      }
-    }
-  };
 
   return (
     <div className={styles.container}>
       <h1>Articles Administrators View</h1>
       <p>Table of articles for moderation</p>
-      <SortableTable headers={headers} data={articles} onDelete={handleDelete} />
+      <SortableTable headers={headers} data={articles}/>
       <button
         className={styles.button} 
         onClick={() => router.push('/admin/adminhome')} >
