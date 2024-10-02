@@ -3,8 +3,8 @@
     margin: 0 auto;
     padding: 100px 65px 200px 50px;
     text-align:center;
-    font-family: cursive;
-    background-color: #7aafe3;
+    font-family:'Courier New', Courier, monospace;
+    background-color:rgb(175, 207, 226);
     font-size: 30px;
   }
   
@@ -17,7 +17,7 @@
     margin-bottom: 1px;
     padding: 7px;
     font-size: 20px;
-    font-family:cursive;
+    font-family:'Times New Roman', Times, serif;
   }
   
   .input {
@@ -32,7 +32,7 @@
   .button {
     padding: 10px;
     font-size: 16px;
-    background-color: #007bff;
+    background-color: rgb(122, 22, 149);
     color: #fff;
     border: none;
     border-radius: 50px;
