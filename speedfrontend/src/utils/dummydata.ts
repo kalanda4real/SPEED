@@ -9,6 +9,7 @@ const data = [
     doi: "https://doi.org/10.1145/2601248.2601267",
     claim: "code quality improvement",
     evidence: "strong support",
+    bibtext: "hello there"
   },
   {
     _id: "2",
