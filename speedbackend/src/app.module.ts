@@ -8,12 +8,18 @@ import { ArticleModule } from './api/articles/article.module';
 import { JwtModule } from "@nestjs/jwt";
 
 @Module({
-  imports: [UserModule, JwtModule.register({
+  imports: [
+    UserModule, 
+    JwtModule.register({
       secret: 'SPEED', 
       signOptions: { expiresIn: '1h' },
-  }),
-  ConfigModule.forRoot(), MongooseModule.forRoot(process.env.DB_URI), UserModule,],
+    }),
+    ConfigModule.forRoot(), 
+    MongooseModule.forRoot(process.env.DB_URI), 
+    UserModule,
+    ArticleModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
-  })
-  export class AppModule {}
+})
+export class AppModule {}
