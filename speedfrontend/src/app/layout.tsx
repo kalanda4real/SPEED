@@ -1,3 +1,5 @@
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";

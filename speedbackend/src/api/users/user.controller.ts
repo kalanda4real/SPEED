@@ -22,7 +22,7 @@ export class UserController{
             throw new HttpException(
                 {
                     status: HttpStatus.NOT_FOUND,
-                    error: 'No Books found',
+                    error: 'No User found',
                 },
                 HttpStatus.NOT_FOUND,
                 {cause:error },
