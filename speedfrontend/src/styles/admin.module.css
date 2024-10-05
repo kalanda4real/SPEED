@@ -1,0 +1,51 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+  }
+  
+  .title {
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+  }
+  
+  .description {
+    margin-bottom: 40px;
+    text-align: center;
+    max-width: 800px;
+  }
+  
+  .buttonContainer {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    gap: 30px; 
+    padding: 30px;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #0070f3; /* Change to your preferred color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 200px; /* Fixed width for consistency */
+  }
+  
+  .button:hover {
+    background-color: #005bb5; /* Darker shade for hover effect */
+  }
+  
+  .counterBox {
+    margin-top: 40px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    width: 200px; /* Fixed width for the counter box */
+  }
+  
