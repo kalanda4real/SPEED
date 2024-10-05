@@ -1,4 +1,5 @@
 import { GetStaticProps, NextPage } from "next";
+import { useState } from "react";
 import SortableTable from '@/components/table/SortableTable';
 import styles from '@/styles/articles.module.css';
 import { useRouter } from "next/router";
@@ -12,14 +13,11 @@ interface ArticlesInterface {
   number?: string;
   pages: string;
   doi?: string;
-
   moderation_status?: string;
   moderator_comments?: string;
-
   submitter_name: string;
   submitter_email: string;
   submitted_date?: string;
-
   analysis_status?: string;
   analysis_notes?: string;
 }
@@ -30,7 +28,10 @@ type ArticlesProps = {
 
 const Articles: NextPage<ArticlesProps> = ({ articles }) => {
   const router = useRouter();
+  const [sortOption, setSortOption] = useState<keyof ArticlesInterface>("title");
+  const [sortedArticles, setSortedArticles] = useState(articles);
 
+  // Headers for the table
   const headers: { key: keyof ArticlesInterface; label: string }[] = [
     { key: "title", label: "Title" },
     { key: "author", label: "Author" },
@@ -45,15 +46,38 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
     { key: "submitter_name", label: "Submitter Name" },
     { key: "submitter_email", label: "Submitter Email" },
     { key: "submitted_date", label: "Submitted Date" },
-
   ];
 
+  // Function to handle sorting
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedOption = e.target.value as keyof ArticlesInterface;
+    setSortOption(selectedOption);
+    const sorted = [...articles].sort((a, b) => {
+      const valA = a[selectedOption] || ""; 
+      const valB = b[selectedOption] || "";
+      return valA.toString().localeCompare(valB.toString());
+    });
+    setSortedArticles(sorted);
+  };
 
   return (
     <div className={styles.container}>
       <h1>Articles Administrators View</h1>
       <p>Table of articles for moderation</p>
-      <SortableTable headers={headers} data={articles}/>
+
+      <div className={styles.controls}>
+        <label htmlFor="sort">Sort by: </label>
+        <select id="sort" value={sortOption} onChange={handleSortChange}>
+          {headers.map(header => (
+            <option key={header.key} value={header.key}>
+              {header.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <SortableTable headers={headers} data={sortedArticles} />
+
       <button
         className={styles.button} 
         onClick={() => router.push('/admin/adminhome')} >
