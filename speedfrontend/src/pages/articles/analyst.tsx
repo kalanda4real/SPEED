@@ -58,7 +58,7 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
       <SortableTable headers={headers} data={articles} />
       <button
         className={styles.button} 
-        onClick={() => router.push('/articles/modview')} >
+        onClick={() => router.push('/mod/modhome')} >
         Go to Mod View
       </button>
     </div>
