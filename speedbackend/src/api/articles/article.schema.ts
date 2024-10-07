@@ -29,14 +29,12 @@ export class Article {
   @Prop()
   doi: string;
 
-  // Moderation fields
-  @Prop({ default: 'pending' }) // ADD ARRAY? can be 'pending', 'approved', 'rejected'
+  @Prop({ default: 'pending' }) 
   moderation_status: string;
 
   @Prop()
   moderator_comments: string;
 
-  // Submitter fields
   @Prop({ required: true })
   submitter_name: string;
 
@@ -46,9 +44,8 @@ export class Article {
   @Prop({ type: Date, default: Date.now })
   submitted_date: Date;
 
-  // Analysis fields
   @Prop()
-  analysis_status: string; // ADD ARRAY? "not_started", "in_progress", "completed"
+  analysis_status: string; 
 
   @Prop()
   analysis_notes: string;

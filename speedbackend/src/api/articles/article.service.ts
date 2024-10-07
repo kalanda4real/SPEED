@@ -20,8 +20,8 @@ export class ArticleService {
     return await this.articleModel.findById(id).exec();
   }
 
-  async create(createBookDto: CreateArticleDto) {
-    return await this.articleModel.create(createBookDto);
+  async create(createarticle: CreateArticleDto) {
+    return await this.articleModel.create(createarticle);
   }
 
   async update(id: string, createBookDto: CreateArticleDto) {

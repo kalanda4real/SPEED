@@ -44,7 +44,6 @@ export class UserService{
       }
       
       async create(createUserDto: CreateUserDto): Promise<User> {
-        // Hash the password before saving the user
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
         const user = new this.userModel({
@@ -73,4 +72,24 @@ export class UserService{
         };
     }
 
+   
+    async updateRoleByUsername(username: string, role: string): Promise<User> {
+        // Ensure the role is valid (optional, you can add your validation logic)
+        const validRoles = ['user', 'mod', 'analyst', 'admin'];
+        if (!validRoles.includes(role)) {
+          throw new Error('Invalid role');
+        }
+    
+        const user = await this.userModel.findOneAndUpdate(
+          { username },
+          { role },
+          { new: true } // Return the updated document
+        ).exec();
+    
+        if (!user) {
+          throw new Error(`User with username ${username} not found`);
+        }
+    
+        return user;
+      }
 }

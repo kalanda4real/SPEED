@@ -6,6 +6,7 @@
     font-family:'Courier New', Courier, monospace;
     background-color: #bdbfc4;
     font-size: 30px;
+    min-height: 60vh;
   }
   
   .form {

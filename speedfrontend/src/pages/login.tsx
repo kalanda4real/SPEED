@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from '@/styles/signup.module.css';
+import Link from 'next/link';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -10,33 +11,29 @@ const Login: React.FC = () => {
     event.preventDefault();
 
     try {
-      // Make a POST request to the backend with login details
+      
       const response = await fetch('http://localhost:8082/api/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }), // sending the email and password
+        body: JSON.stringify({ email, password }),
       });
       
 
       if (!response.ok) {
-        // Handle response errors
+
         const errorData = await response.json();
         setErrorMessage(errorData.message || 'Login failed');
         return;
       }
 
-      // Successful login, get response data (e.g., JWT)
+    
       const data = await response.json();
       console.log('Login Success:', data);
 
-      // Save the JWT or token in local storage or cookies
-      localStorage.setItem('token', data.token); // assuming the backend sends a token
-
-      // Optionally, redirect to a different page after successful login
-      // window.location.href = '/dashboard';
-
+     
+      localStorage.setItem('token', data.token); 
     } catch (error) {
       console.error('Error logging in:', error);
       setErrorMessage('An error occurred. Please try again.');
@@ -73,6 +70,9 @@ const Login: React.FC = () => {
         </div>
 
         <button type="submit" className={styles.button}>Login</button>
+        <Link href="/signup" passHref>
+          <button>Click to go to the SignUp page</button>
+        </Link>
       </form>
     </div>
   );

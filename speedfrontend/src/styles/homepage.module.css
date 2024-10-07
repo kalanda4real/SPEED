@@ -33,4 +33,24 @@
     margin: 0;
     color: #333;
   }
+  .buttonContainer {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    gap: 30px; 
+    padding: 30px;
+  }
+  .button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #0070f3; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 200px; 
+  }
+  .button:hover {
+    background-color: #005bb5;
+  }
   

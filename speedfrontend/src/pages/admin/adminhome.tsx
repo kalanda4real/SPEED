@@ -26,7 +26,6 @@ export default function AdminHome() {
 
       <footer className={styles.footer}>
         <p>© 2024 Software Practice Empirical Evidence Database. By Azel Pheobe Martin Simar.</p>
-        <a href="/">About Us</a>
       </footer>
     </div>
   );

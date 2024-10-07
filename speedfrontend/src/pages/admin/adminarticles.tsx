@@ -1,5 +1,6 @@
 import { GetStaticProps, NextPage } from "next";
-import SortableTable from '@/components/table/admintable';
+import { useState } from "react";
+import SortableTable from '@/components/table/SortableTable';
 import styles from '@/styles/articles.module.css';
 import { useRouter } from "next/router";
 
@@ -12,14 +13,11 @@ interface ArticlesInterface {
   number?: string;
   pages: string;
   doi?: string;
-
   moderation_status?: string;
   moderator_comments?: string;
-
   submitter_name: string;
   submitter_email: string;
   submitted_date?: string;
-
   analysis_status?: string;
   analysis_notes?: string;
 }
@@ -30,7 +28,10 @@ type ArticlesProps = {
 
 const Articles: NextPage<ArticlesProps> = ({ articles }) => {
   const router = useRouter();
+  const [sortOption, setSortOption] = useState<keyof ArticlesInterface>("title");
+  const [sortedArticles, setSortedArticles] = useState(articles);
 
+  // Headers for the table
   const headers: { key: keyof ArticlesInterface; label: string }[] = [
     { key: "title", label: "Title" },
     { key: "author", label: "Author" },
@@ -42,37 +43,39 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
     { key: "doi", label: "DOI" },
     { key: "moderation_status", label: "Moderation Status" },
     { key: "moderator_comments", label: "Moderator Comments" },
-    { key: "submitter_name", label: "Submitter Name" },
-    { key: "submitter_email", label: "Submitter Email" },
     { key: "submitted_date", label: "Submitted Date" },
-
   ];
 
-  // Function to delete an article
-  const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to delete this article from the database?")) {
-      try {
-        const response = await fetch(`http://localhost:8082/api/articles/${id}`, {
-          method: "DELETE",
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to delete article');
-        }
-
-        // Optionally, refresh the page or update the local state
-        router.replace(router.asPath);
-      } catch (error) {
-        console.error('Error deleting article:', error);
-      }
-    }
+  // Function to handle sorting
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedOption = e.target.value as keyof ArticlesInterface;
+    setSortOption(selectedOption);
+    const sorted = [...articles].sort((a, b) => {
+      const valA = a[selectedOption] || ""; 
+      const valB = b[selectedOption] || "";
+      return valA.toString().localeCompare(valB.toString());
+    });
+    setSortedArticles(sorted);
   };
 
   return (
     <div className={styles.container}>
       <h1>Articles Administrators View</h1>
       <p>Table of articles for moderation</p>
-      <SortableTable headers={headers} data={articles} onDelete={handleDelete} />
+
+      <div className={styles.controls}>
+        <label htmlFor="sort">Sort by: </label>
+        <select id="sort" value={sortOption} onChange={handleSortChange}>
+          {headers.map(header => (
+            <option key={header.key} value={header.key}>
+              {header.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <SortableTable headers={headers} data={sortedArticles} />
+
       <button
         className={styles.button} 
         onClick={() => router.push('/admin/adminhome')} >
