@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from '@/styles/signup.module.css';
+import Link from 'next/link';
 
 const Signup: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -80,6 +81,9 @@ const Signup: React.FC = () => {
         </div>
 
         <button type="submit" className={styles.button}>Sign Up</button>
+        <Link href="/login" passHref>
+          <button>Click to go to the Login page</button>
+        </Link>
       </form>
     </div>
   );

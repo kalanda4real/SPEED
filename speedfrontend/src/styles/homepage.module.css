@@ -43,14 +43,14 @@
   .button {
     padding: 10px 20px;
     font-size: 1rem;
-    background-color: #0070f3; /* Change to your preferred color */
+    background-color: #0070f3; 
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 200px; /* Fixed width for consistency */
+    width: 200px; 
   }
   .button:hover {
-    background-color: #005bb5; /* Darker shade for hover effect */
+    background-color: #005bb5;
   }
   

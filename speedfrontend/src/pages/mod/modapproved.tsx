@@ -32,7 +32,7 @@ const ApprovedArticles: NextPage<ApprovedArticlesProps> = ({ articles }) => {
 
   const [updatedArticles, setUpdatedArticles] = useState(articles);
   const [loadingArticleId, setLoadingArticleId] = useState<string | null>(null);
-  const [editedComments, setEditedComments] = useState<{ [key: string]: string }>({}); // Store edited comments
+  const [editedComments, setEditedComments] = useState<{ [key: string]: string }>({}); 
 
   const headers = [
     { key: "title", label: "Title" },
@@ -48,12 +48,12 @@ const ApprovedArticles: NextPage<ApprovedArticlesProps> = ({ articles }) => {
     { key: "submitted_date", label: "Submitted Date" },
   ];
 
-  // Status options for moderation
+ 
   const moderationOptions = ["pending", "approved", "rejected"];
 
-  // Function to handle moderation status change
+ 
   const handleStatusChange = async (articleId: string, newStatus: string) => {
-    setLoadingArticleId(articleId); // Disable dropdown for the current article
+    setLoadingArticleId(articleId);
 
     try {
       const response = await fetch(`http://localhost:8082/api/articles/test/${articleId}`, {
@@ -68,7 +68,7 @@ const ApprovedArticles: NextPage<ApprovedArticlesProps> = ({ articles }) => {
         throw new Error('Failed to update moderation status');
       }
 
-      // Update the local article list with the new moderation status
+      
       setUpdatedArticles(prevArticles =>
         prevArticles.map(article =>
           article._id === articleId ? { ...article, moderation_status: newStatus } : article
@@ -77,19 +77,19 @@ const ApprovedArticles: NextPage<ApprovedArticlesProps> = ({ articles }) => {
     } catch (error) {
       console.error('Error updating moderation status:', error);
     } finally {
-      setLoadingArticleId(null); // Re-enable dropdown after the status update
+      setLoadingArticleId(null); 
     }
   };
 
-  // Function to handle moderator comment change
+  
   const handleCommentChange = (articleId: string, comment: string) => {
     setEditedComments({ ...editedComments, [articleId]: comment });
   };
 
-  // Function to save moderator comment
+  
   const saveComment = async (articleId: string) => {
     const newComment = editedComments[articleId];
-    setLoadingArticleId(articleId); // Disable the comment input while updating
+    setLoadingArticleId(articleId); 
 
     try {
       const response = await fetch(`http://localhost:8082/api/articles/test/${articleId}`, {
@@ -104,7 +104,7 @@ const ApprovedArticles: NextPage<ApprovedArticlesProps> = ({ articles }) => {
         throw new Error('Failed to update moderator comment');
       }
 
-      // Update the local article list with the new moderator comment
+      
       setUpdatedArticles(prevArticles =>
         prevArticles.map(article =>
           article._id === articleId ? { ...article, moderator_comments: newComment } : article
@@ -113,11 +113,11 @@ const ApprovedArticles: NextPage<ApprovedArticlesProps> = ({ articles }) => {
     } catch (error) {
       console.error('Error updating moderator comment:', error);
     } finally {
-      setLoadingArticleId(null); // Re-enable input after saving comment
+      setLoadingArticleId(null); 
     }
   };
 
-  // Filter only approved articles
+ 
   const approvedArticles = updatedArticles.filter(article => article.moderation_status === "approved");
 
   return (
@@ -134,7 +134,7 @@ const ApprovedArticles: NextPage<ApprovedArticlesProps> = ({ articles }) => {
               value={article.moderation_status}
               onChange={(e) => handleStatusChange(article._id, e.target.value)}
               className={styles.dropdown}
-              disabled={loadingArticleId === article._id} // Disable while loading
+              disabled={loadingArticleId === article._id} 
             >
               {moderationOptions.map((status) => (
                 <option key={status} value={status}>
@@ -149,12 +149,12 @@ const ApprovedArticles: NextPage<ApprovedArticlesProps> = ({ articles }) => {
                 value={editedComments[article._id] || article.moderator_comments || ""}
                 onChange={(e) => handleCommentChange(article._id, e.target.value)}
                 className={styles.textarea}
-                disabled={loadingArticleId === article._id} // Disable while loading
+                disabled={loadingArticleId === article._id}
               />
               <button
                 onClick={() => saveComment(article._id)}
                 className={styles.button}
-                disabled={loadingArticleId === article._id} // Disable while loading
+                disabled={loadingArticleId === article._id} 
               >
                 Save Comment
               </button>

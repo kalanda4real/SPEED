@@ -1,25 +1,25 @@
-/* Ensure the background covers the entire screen */
+
 .body {
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
-    height: 100%; /* Allow the body to take full height */
-    background-color: #f0f4f8; /* Set a background color that fits the design */
+    margin: 0; 
+    padding: 0; 
+    height: 100%; 
+    background-color: #f0f4f8; 
   }
   
-  /* Container to hold the content */
+  
   .container {
     padding: 20px;
-    width: 100%; /* Make the container take full width */
-    max-width: 1200px; /* Increase max width for larger screens */
+    width: 100%; 
+    max-width: 1200px; 
     margin: 0 auto;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    min-height: 80vh; /* Ensure the container has a minimum height */
-    overflow: hidden; /* Prevents overflow from affecting layout */
-    display: flex; /* Use Flexbox for centering */
-    flex-direction: column; /* Stack children vertically */
-    justify-content: center; /* Center vertically */
+    min-height: 80vh; 
+    overflow: hidden; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center;
   }
   
   
@@ -39,7 +39,7 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 300px; /* Adjust width as needed */
+    width: 300px; 
     font-size: 1rem;
   
     &:focus {
@@ -71,26 +71,26 @@
   .sortableTable {
     margin-top: 20px;
     display: flex;
-    justify-content: center; /* Center the table horizontally */
-    overflow-x: auto; /* Allow horizontal scrolling if needed */
+    justify-content: center; 
+    overflow-x: auto; 
   }
   
   .table {
-    width: 100%; /* Ensure the table takes full width of the container */
-    max-width: 100%; /* Prevents overflow */
-    border-collapse: collapse; /* Collapses borders for better spacing */
+    width: 100%; 
+    max-width: 100%; 
+    border-collapse: collapse; 
   }
   
   .table th,
   .table td {
-    padding: 10px; /* Add padding for table cells */
-    text-align: left; /* Align text to the left */
-    border: 1px solid #ccc; /* Optional: Add a border to table cells */
+    padding: 10px; 
+    text-align: left; 
+    border: 1px solid #ccc; 
   }
   
   
     .searchButton {
-      width: auto; /* Allow button to adjust its size */
+      width: auto;
     }
 
   

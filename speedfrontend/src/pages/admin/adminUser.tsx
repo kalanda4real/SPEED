@@ -17,7 +17,7 @@ type UsersProps = {
 
 const Users: NextPage<UsersProps> = ({ users }) => {
   const [updatedUsers, setUpdatedUsers] = useState(users);
-  const [loadingUsername, setLoadingUsername] = useState<string | null>(null); // State to track loading user
+  const [loadingUsername, setLoadingUsername] = useState<string | null>(null); 
   const router = useRouter();
 
   const headers: { key: keyof UserInterface; label: string }[] = [
@@ -28,9 +28,9 @@ const Users: NextPage<UsersProps> = ({ users }) => {
 
   const roles = ["user", "mod", "analyst", "admin"];
 
-  // Function to handle role change using username
+  
   const handleRoleChange = async (username: string, newRole: string) => {
-    setLoadingUsername(username); // Set loading state for the current user
+    setLoadingUsername(username); 
     try {
       const response = await fetch(`http://localhost:8082/api/users/username/${username}/role`, {
         method: 'PATCH',
@@ -70,9 +70,9 @@ const Users: NextPage<UsersProps> = ({ users }) => {
           role: (
             <select
               value={user.role}
-              onChange={(e) => handleRoleChange(user.username, e.target.value)} // Pass username instead of id
+              onChange={(e) => handleRoleChange(user.username, e.target.value)} 
               className={styles.dropdown}
-              disabled={loadingUsername === user.username} // Disable dropdown while loading
+              disabled={loadingUsername === user.username} 
             >
               {roles.map((role) => (
                 <option key={role} value={role}>

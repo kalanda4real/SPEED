@@ -46,7 +46,7 @@ const SearchArticles: NextPage<SearchArticlesProps> = ({ articles }) => {
    
   ];
 
-  // Handle search functionality
+ 
   const handleSearch = () => {
     const filtered = articles.filter(article =>
       article.title.toLowerCase().includes(searchTerm.toLowerCase())

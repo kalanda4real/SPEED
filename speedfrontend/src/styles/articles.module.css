@@ -16,7 +16,7 @@
   color: #fff;
   border: none;
   border-radius: 50px;
-  cursor: pointer; /* Change cursor to pointer */
+  cursor: pointer; 
   margin-top: 20px;
 }
 .button:hover {
@@ -46,24 +46,24 @@
 }
 
 .tableContainer {
-  width: 100%; /* Ensure the table container takes full width */
-  max-height: 45vh; /* Set max height for the table */
-  overflow-y: auto; /* Enable vertical scrolling for long tables */
-  overflow-x: auto; /* Enable horizontal scrolling for wide tables */
-  margin-top: 20px; /* Create space below fixed filter container */
-  margin-bottom: 20px; /* Add space below the table container */
-  display: flex; /* Use flexbox for layout */
-  justify-content: center; /* Center content horizontally */
+  width: 100%; 
+  max-height: 45vh; 
+  overflow-y: auto; 
+  overflow-x: auto; 
+  margin-top: 20px; 
+  margin-bottom: 20px; 
+  display: flex; 
+  justify-content: center;
 }
 
 .table th,
 .table td {
-  padding: 10px; /* Add padding for table cells */
-  text-align: left; /* Align text to the left */
-  border: 1px solid #ccc; /* Optional: Add a border to table cells */
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ccc; 
 }
 
-/* Add margin to table rows for spacing */
+
 .table tr {
-  margin-bottom: 10px; /* Add space between rows */
+  margin-bottom: 10px; 
 }
