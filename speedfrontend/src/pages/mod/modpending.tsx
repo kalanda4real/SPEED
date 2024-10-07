@@ -44,8 +44,6 @@ const ApprovedArticles: NextPage<ApprovedArticlesProps> = ({ articles }) => {
     { key: "doi", label: "DOI" },
     { key: "moderation_status", label: "Moderation Status" },
     { key: "moderator_comments", label: "Moderator Comments" },
-    { key: "submitter_name", label: "Submitter Name" },
-    { key: "submitter_email", label: "Submitter Email" },
     { key: "submitted_date", label: "Submitted Date" },
   ];
 
@@ -87,7 +85,7 @@ const ApprovedArticles: NextPage<ApprovedArticlesProps> = ({ articles }) => {
 
   return (
     <div className={styles.container}>
-      <h1>Admin View: Pending Articles List</h1>
+      <h1>Moderator View: Pending Articles List</h1>
       <p>List of articles that need to be moderated</p>
 
       <SortableTable
@@ -111,11 +109,11 @@ const ApprovedArticles: NextPage<ApprovedArticlesProps> = ({ articles }) => {
         }))}
       />
 
-      <button
+    <button
         className={styles.button}
-        onClick={() => router.push('/admin/adminhome')}
+        onClick={() => router.push('/mod/')}
       >
-        Back to admin home
+        Back to Mod home
       </button>
     </div>
   );

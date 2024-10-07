@@ -43,8 +43,6 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
     { key: "doi", label: "DOI" },
     { key: "moderation_status", label: "Moderation Status" },
     { key: "moderator_comments", label: "Moderator Comments" },
-    { key: "submitter_name", label: "Submitter Name" },
-    { key: "submitter_email", label: "Submitter Email" },
     { key: "submitted_date", label: "Submitted Date" },
   ];
 

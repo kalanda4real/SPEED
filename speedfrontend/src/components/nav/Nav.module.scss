@@ -13,6 +13,9 @@
   height: fit-content;
   justify-content: flex-start; /* Ensures all items align to the left */
 }
+.navitem:hover {
+  background-color: #4a5865; /* Darker shade for hover effect */
+}
 
 .hide {
   top: -3em;

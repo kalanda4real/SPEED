@@ -19,11 +19,9 @@ export default function ModeratorHome() {
         <Link href="/mod/modrejected" passHref>
           <button className={styles.button}>Rejected Articles</button>
         </Link>
-      </div>
-
-      <div className={styles.counterBox}>
-        <h4>Pending article count: <span id="pendingCounterValue">0</span></h4>
-        <h4>Approved article count: <span id="approvedCounterValue">0</span></h4>
+        <Link href="/mod/analytics" passHref>
+          <button className={styles.button}>Analytics</button>
+        </Link>
       </div>
 
       <footer className={styles.footer}>

@@ -26,9 +26,12 @@ type SearchArticlesProps = {
   articles: ArticlesInterface[];
 };
 
+
 const SearchArticles: NextPage<SearchArticlesProps> = ({ articles }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredArticles, setFilteredArticles] = useState<ArticlesInterface[]>(articles);
+
+  const approvedArticles = articles.filter(article => article.moderation_status === 'approved');
 
   const headers = [
     { key: "title", label: "Title" },
@@ -39,6 +42,7 @@ const SearchArticles: NextPage<SearchArticlesProps> = ({ articles }) => {
     { key: "number", label: "Number" },
     { key: "pages", label: "Pages" },
     { key: "doi", label: "DOI" },
+    {key: "moderator_comments", label: "Review Comments"},
    
   ];
 
@@ -68,7 +72,7 @@ const SearchArticles: NextPage<SearchArticlesProps> = ({ articles }) => {
 
       <SortableTable
         headers={headers}
-        data={filteredArticles}
+        data={approvedArticles}
       />
     </div>
   );

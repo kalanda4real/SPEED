@@ -32,6 +32,7 @@ const ApprovedArticles: NextPage<ApprovedArticlesProps> = ({ articles }) => {
 
   const [updatedArticles, setUpdatedArticles] = useState(articles);
   const [loadingArticleId, setLoadingArticleId] = useState<string | null>(null);
+  const [editedComments, setEditedComments] = useState<{ [key: string]: string }>({}); // Store edited comments
 
   const headers = [
     { key: "title", label: "Title" },
@@ -44,8 +45,6 @@ const ApprovedArticles: NextPage<ApprovedArticlesProps> = ({ articles }) => {
     { key: "doi", label: "DOI" },
     { key: "moderation_status", label: "Moderation Status" },
     { key: "moderator_comments", label: "Moderator Comments" },
-    { key: "submitter_name", label: "Submitter Name" },
-    { key: "submitter_email", label: "Submitter Email" },
     { key: "submitted_date", label: "Submitted Date" },
   ];
 
@@ -82,12 +81,48 @@ const ApprovedArticles: NextPage<ApprovedArticlesProps> = ({ articles }) => {
     }
   };
 
+  // Function to handle moderator comment change
+  const handleCommentChange = (articleId: string, comment: string) => {
+    setEditedComments({ ...editedComments, [articleId]: comment });
+  };
+
+  // Function to save moderator comment
+  const saveComment = async (articleId: string) => {
+    const newComment = editedComments[articleId];
+    setLoadingArticleId(articleId); // Disable the comment input while updating
+
+    try {
+      const response = await fetch(`http://localhost:8082/api/articles/test/${articleId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ moderator_comments: newComment }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update moderator comment');
+      }
+
+      // Update the local article list with the new moderator comment
+      setUpdatedArticles(prevArticles =>
+        prevArticles.map(article =>
+          article._id === articleId ? { ...article, moderator_comments: newComment } : article
+        )
+      );
+    } catch (error) {
+      console.error('Error updating moderator comment:', error);
+    } finally {
+      setLoadingArticleId(null); // Re-enable input after saving comment
+    }
+  };
+
   // Filter only approved articles
   const approvedArticles = updatedArticles.filter(article => article.moderation_status === "approved");
 
   return (
     <div className={styles.container}>
-      <h1>Admin View: Approved Articles List</h1>
+      <h1>Moderator View: Approved Articles List</h1>
       <p>List of approved articles with their moderation statuses</p>
 
       <SortableTable
@@ -108,14 +143,31 @@ const ApprovedArticles: NextPage<ApprovedArticlesProps> = ({ articles }) => {
               ))}
             </select>
           ),
+          moderator_comments: (
+            <>
+              <textarea
+                value={editedComments[article._id] || article.moderator_comments || ""}
+                onChange={(e) => handleCommentChange(article._id, e.target.value)}
+                className={styles.textarea}
+                disabled={loadingArticleId === article._id} // Disable while loading
+              />
+              <button
+                onClick={() => saveComment(article._id)}
+                className={styles.button}
+                disabled={loadingArticleId === article._id} // Disable while loading
+              >
+                Save Comment
+              </button>
+            </>
+          ),
         }))}
       />
 
       <button
         className={styles.button}
-        onClick={() => router.push('/admin/adminhome')}
+        onClick={() => router.push('/mod/')}
       >
-        Back to admin home
+        Back to Mod home
       </button>
     </div>
   );
