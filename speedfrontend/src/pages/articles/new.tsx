@@ -7,7 +7,7 @@ const NewArticle = () => {
 
   const [article, setArticle] = useState({
     title: "",
-    authors: "",
+    author: "",
     source: "",
     year: "",
     doi: "",
@@ -39,7 +39,7 @@ const NewArticle = () => {
         // Reset the form after successful submission
         setArticle({
           title: "",
-          authors: "",
+          author: "",
           source: "",
           year: "",
           doi: "",
@@ -66,13 +66,13 @@ const NewArticle = () => {
           onChange={onChange}
         />
 
-        <label htmlFor="authors">Author:</label>
+        <label htmlFor="author">Authors:</label>
         <input
           className={formStyles.formItem}
           type="text"
-          name="authors"
-          id="authors"
-          value={article.authors}
+          name="author"
+          id="author"
+          value={article.author}
           onChange={onChange}
         />
 
