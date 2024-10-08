@@ -1,10 +1,11 @@
+/* eslint-disable prettier/prettier */
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
-import { CreateArticleDto } from 'src/api/articles/createarticle.dto';
-import { ArticleController } from 'src/api/articles/article.controller';
-import { ArticleService } from 'src/api/articles/article.service';
+import { CreateArticleDto } from './../src/api/articles/createarticle.dto';
+import { ArticleController } from './../src/api/articles/article.controller';
+import { ArticleService } from './../src/api/articles/article.service';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -51,12 +52,9 @@ describe('ArticleController (e2e)', () => {
     const createArticleDto: CreateArticleDto = {
       author: 'John Doe',
       title: 'Best Practices in Software Engineering',
-      journal: 'SE Journal',
+      source: 'www.testing.com',
       year: '2024',
-      submitter_name: 'Jane Smith',
-      submitter_email: 'jane.smith@example.com',
-      moderation_status: 'pending',
-      submitted_date: '2024-10-07', //FIX THIS ??
+      doi: '8th October 2024',
     };
 
     await articleController.addArticle(createArticleDto);
