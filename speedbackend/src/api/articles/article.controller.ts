@@ -8,6 +8,7 @@ import {
   Param,
   Post,
   Put,
+  Patch
 } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './createarticle.dto';
@@ -77,7 +78,7 @@ export class ArticleController {
     }
 
     // Update an article
-    @Put('/:id')
+    @Patch('/test/:id')
     async updateArticle(
         @Param('id') id: string,
         @Body() createArticleDto: CreateArticleDto,
@@ -113,5 +114,4 @@ export class ArticleController {
             );
         }
     }
-
 }

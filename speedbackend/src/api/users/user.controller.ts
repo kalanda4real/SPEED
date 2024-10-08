@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, Patch } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./createuser.dto";
 import { error } from "console";
 import { LoginUserDto } from "../login/login.dto";
+import { UpdateUserRoleDto } from "./updateuser.dto";
 
 
 @Controller('api/users')
@@ -111,6 +112,26 @@ export class UserController{
         { cause: error },
       );
     }
+}
+
+    @Patch('/username/:username/role')
+async updateRoleByUsername(
+  @Param('username') username: string,
+  @Body() updateUserRoleDto: { role: string }, // Adjust to your DTO
+) {
+  try {
+    const updatedUser = await this.userservice.updateRoleByUsername(username, updateUserRoleDto.role);
+    return { role: updatedUser.role }; // Return the updated user role
+  } catch (error) {
+    throw new HttpException(
+      {
+        status: HttpStatus.BAD_REQUEST,
+        error: 'Could not update user role',
+      },
+      HttpStatus.BAD_REQUEST,
+      { cause: error },
+    );
+  }
 }
 
 }
