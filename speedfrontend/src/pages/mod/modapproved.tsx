@@ -34,7 +34,7 @@ const ApprovedArticles: NextPage<ApprovedArticlesProps> = ({ articles }) => {
   const headers = [
     { key: "title", label: "Title" },
     { key: "author", label: "Author" },
-    { key: "journal", label: "Journal" },
+    { key: "source", label: "Source" },
     { key: "year", label: "Publication Year" },
     { key: "doi", label: "DOI" },
     { key: "moderation_status", label: "Moderation Status" },
