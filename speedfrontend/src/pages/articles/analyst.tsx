@@ -5,24 +5,19 @@ import {useRouter} from "next/router";
 
 
 interface ArticlesInterface {
+  _id: string;
   author: string;
   title: string;
-  journal: string;
+  source: string;
   year: string;
-  volume?: string;
-  number?: string;
-  pages: string;
-  doi?: string;
-  
+  doi: string;
   moderation_status?: string;
   moderator_comments?: string;
-
-  submitter_name: string;
-  submitter_email: string;
-  submitted_date?: string;
-
   analysis_status?: string;
   analysis_notes?: string;
+  claim?: string;
+  evidence?: string;
+  rating?: string;
 }
 
 type ArticlesProps = {
@@ -35,18 +30,15 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
   const headers: { key: keyof ArticlesInterface; label: string }[] = [
     { key: "title", label: "Title" },
     { key: "author", label: "Author" },
-    { key: "journal", label: "Journal" },
+    { key: "source", label: "Source" },
     { key: "year", label: "Publication Year" },
-    { key: "volume", label: "Volume" },
-    { key: "number", label: "Number" },
-    { key: "pages", label: "Pages" },
     { key: "doi", label: "DOI" },
     { key: "moderation_status", label: "Moderation Status" },
-    { key: "submitter_name", label: "Submitter Name" },
-    { key: "submitter_email", label: "Submitter Email" },
-    { key: "submitted_date", label: "Submitted Date" },
+    { key: "moderator_comments", label: "Moderation Comments" },
     { key: "analysis_status", label: "Analysis Status" },
-    { key: "analysis_notes", label: "Analysis Notes" }
+    { key: "claim", label: "Claim" },
+    { key: "evidence", label: "Evidence" },
+    { key: "rating", label: "Rating" },
   ];
 
 
