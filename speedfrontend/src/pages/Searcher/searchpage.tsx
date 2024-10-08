@@ -7,19 +7,16 @@ interface ArticlesInterface {
   _id: string;
   author: string;
   title: string;
-  journal: string;
+  source: string;
   year: string;
-  volume?: string;
-  number?: string;
-  pages: string;
-  doi?: string;
+  doi: string;
   moderation_status?: string;
   moderator_comments?: string;
-  submitter_name: string;
-  submitter_email: string;
-  submitted_date?: string;
   analysis_status?: string;
   analysis_notes?: string;
+  claim?: string;
+  evidence?: string;
+  rating?: string;
 }
 
 type SearchArticlesProps = {
@@ -36,14 +33,12 @@ const SearchArticles: NextPage<SearchArticlesProps> = ({ articles }) => {
   const headers = [
     { key: "title", label: "Title" },
     { key: "author", label: "Author" },
-    { key: "journal", label: "Journal" },
+    { key: "source", label: "Source" },
     { key: "year", label: "Publication Year" },
-    { key: "volume", label: "Volume" },
-    { key: "number", label: "Number" },
-    { key: "pages", label: "Pages" },
     { key: "doi", label: "DOI" },
-    {key: "moderator_comments", label: "Review Comments"},
-   
+    {key: "claim", label: "Review Comments"},
+    {key: "evidence", label: "Evidence"},
+    {key: "rating", label: "Rating"},
   ];
 
  

@@ -12,7 +12,7 @@ export class CreateArticleDto {
     moderator_comments?: string;
   
     // Analysis fields
-    analysis_status?: 'pending' | 'approved' | 'rejected'; 
+    analysis_status?: 'not_started'|'in_progress'|'completed';
     claim?: string;
     evidence?: string;
     rating?: string;
