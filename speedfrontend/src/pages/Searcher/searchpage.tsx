@@ -7,51 +7,47 @@ interface ArticlesInterface {
   _id: string;
   author: string;
   title: string;
-  journal: string;
+  source: string;
   year: string;
-  volume?: string;
-  number?: string;
-  pages: string;
-  doi?: string;
+  doi: string;
   moderation_status?: string;
   moderator_comments?: string;
-  submitter_name: string;
-  submitter_email: string;
-  submitted_date?: string;
   analysis_status?: string;
   analysis_notes?: string;
+  claim?: string;
+  evidence?: string;
+  rating?: string;
 }
 
 type SearchArticlesProps = {
   articles: ArticlesInterface[];
 };
 
-
 const SearchArticles: NextPage<SearchArticlesProps> = ({ articles }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredArticles, setFilteredArticles] = useState<ArticlesInterface[]>(articles);
-
+  
+  // Filter the approved articles once
   const approvedArticles = articles.filter(article => article.moderation_status === 'approved');
+
+  // Start with the approved articles in the filtered list
+  const [filteredArticles, setFilteredArticles] = useState<ArticlesInterface[]>(approvedArticles);
 
   const headers = [
     { key: "title", label: "Title" },
     { key: "author", label: "Author" },
-    { key: "journal", label: "Journal" },
+    { key: "source", label: "Source" },
     { key: "year", label: "Publication Year" },
-    { key: "volume", label: "Volume" },
-    { key: "number", label: "Number" },
-    { key: "pages", label: "Pages" },
     { key: "doi", label: "DOI" },
-    {key: "moderator_comments", label: "Review Comments"},
-   
+    {key: "claim", label: "Review Comments"},
+    {key: "evidence", label: "Evidence"},
+    {key: "rating", label: "Rating"},
   ];
 
- 
   const handleSearch = () => {
-    const filtered = articles.filter(article =>
+    const filtered = approvedArticles.filter(article =>
       article.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    setFilteredArticles(filtered);
+    setFilteredArticles(filtered); // Update the table with filtered results
   };
 
   return (
@@ -70,9 +66,10 @@ const SearchArticles: NextPage<SearchArticlesProps> = ({ articles }) => {
         </button>
       </div>
 
+      {/* Use filteredArticles instead of approvedArticles */}
       <SortableTable
         headers={headers}
-        data={approvedArticles}
+        data={filteredArticles} // This now shows the filtered results
       />
     </div>
   );

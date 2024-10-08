@@ -12,47 +12,33 @@ export class Article {
   title: string;
 
   @Prop({ required: true })
-  journal: string;
+  source: string;
 
   @Prop({ required: true })
   year: string;
 
-  @Prop()
-  volume: string;
-
-  @Prop()
-  number: string;
-
-  @Prop()
-  pages: string;
-
-  @Prop()
+  @Prop({ required: true })
   doi: string;
 
-  @Prop({ default: 'pending' }) 
+  // Moderation fields
+  @Prop({ enum: ['pending', 'approved', 'rejected'], default: 'pending' })
   moderation_status: string;
 
   @Prop()
   moderator_comments: string;
 
-  @Prop({ required: true })
-  submitter_name: string;
-
-  @Prop({ required: true })
-  submitter_email: string;
-
-  @Prop({ type: Date, default: Date.now })
-  submitted_date: Date;
+  // Analysis fields
+  @Prop({ enum: ['not_started', 'in_progress', 'completed'], default: 'not_started' })
+  analysis_status: string;
+  
+  @Prop()
+  claim: string;
 
   @Prop()
-  analysis_status: string; 
+  evidence: string;
 
   @Prop()
-  analysis_notes: string;
-
-
-  @Prop({ type: Date, default: Date.now })
-  updated_date: Date;
+  rating: string;
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);

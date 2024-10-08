@@ -1,95 +1,80 @@
-import { FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 import formStyles from "../../styles/Form.module.scss";
 
-const NewDiscussion = () => {
-  const [title, setTitle] = useState("");
-  const [authors, setAuthors] = useState<string[]>([]);
-  const [source, setSource] = useState("");
-  const [pubYear, setPubYear] = useState<number>(0);
-  const [doi, setDoi] = useState("");
-  const [summary, setSummary] = useState("");
-  const [linkedDiscussion] = useState("");
+const NewArticle = () => {
+  const navigate = useRouter();
 
-  const submitNewArticle = async (event: FormEvent<HTMLFormElement>) => {
+  const [article, setArticle] = useState({
+    title: "",
+    author: "",
+    source: "",
+    year: "",
+    doi: "",
+  });
+
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setArticle({ ...article, [event.target.name]: event.target.value });
+  };
+
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    console.log(
-      JSON.stringify({
-        title,
-        authors,
-        source,
-        publication_year: pubYear,
-        doi,
-        summary,
-        linked_discussion: linkedDiscussion,
+    console.log(JSON.stringify(article));
+    fetch("http://localhost:8082/api/articles", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(article),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          return res.json().then((error) => {
+            throw new Error(`Failed to create article: ${error.message}`);
+          });
+        }
+        return res.json();
       })
-    );
-  };
-
-
-  const addAuthor = () => {
-    setAuthors(authors.concat([""]));
-  };
-
-  const removeAuthor = (index: number) => {
-    setAuthors(authors.filter((_, i) => i !== index));
-  };
-
-  const changeAuthor = (index: number, value: string) => {
-    setAuthors(
-      authors.map((oldValue, i) => {
-        return index === i ? value : oldValue;
+      .then(() => {
+        // Reset the form after successful submission
+        setArticle({
+          title: "",
+          author: "",
+          source: "",
+          year: "",
+          doi: "",
+        });
+        // Redirect or navigate
+        navigate.push("/"); // Redirect to another page, e.g., homepage or articles list
       })
-    );
+      .catch((err) => {
+        console.error("Error from NewArticle: ", err);
+      });
   };
-
 
   return (
     <div className="container">
       <h1>New Article</h1>
-      <form className={formStyles.form} onSubmit={submitNewArticle}>
+      <form className={formStyles.form} onSubmit={onSubmit}>
         <label htmlFor="title">Title:</label>
         <input
           className={formStyles.formItem}
           type="text"
           name="title"
           id="title"
-          value={title}
-          onChange={(event) => {
-            setTitle(event.target.value);
-          }}
+          value={article.title}
+          onChange={onChange}
         />
 
         <label htmlFor="author">Authors:</label>
-        {authors.map((author, index) => {
-          return (
-            <div key={`author ${index}`} className={formStyles.arrayItem}>
-              <input
-                type="text"
-                name="author"
-                value={author}
-                onChange={(event) => changeAuthor(index, event.target.value)}
-                className={formStyles.formItem}
-              />
-              <button
-                onClick={() => removeAuthor(index)}
-                className={formStyles.buttonItem}
-                style={{ marginLeft: "3rem" }}
-                type="button"
-              >
-                -
-              </button>
-            </div>
-          );
-        })}
-        <button
-          onClick={() => addAuthor()}
-          className={formStyles.buttonItem}
-          style={{ marginLeft: "auto" }}
-          type="button"
-        >
-          +
-        </button>
+        <input
+          className={formStyles.formItem}
+          type="text"
+          name="author"
+          id="author"
+          value={article.author}
+          onChange={onChange}
+        />
 
         <label htmlFor="source">Source:</label>
         <input
@@ -97,27 +82,18 @@ const NewDiscussion = () => {
           type="text"
           name="source"
           id="source"
-          value={source}
-          onChange={(event) => {
-            setSource(event.target.value);
-          }}
+          value={article.source}
+          onChange={onChange}
         />
 
-        <label htmlFor="pubYear">Publication Year:</label>
+        <label htmlFor="year">Publication Year:</label>
         <input
           className={formStyles.formItem}
-          type="number"
-          name="pubYear"
-          id="pubYear"
-          value={pubYear}
-          onChange={(event) => {
-            const val = event.target.value;
-            if (val === "") {
-              setPubYear(0);
-            } else {
-              setPubYear(parseInt(val));
-            }
-          }}
+          type="text"
+          name="year"
+          id="year"
+          value={article.year}
+          onChange={onChange}
         />
 
         <label htmlFor="doi">DOI:</label>
@@ -126,18 +102,8 @@ const NewDiscussion = () => {
           type="text"
           name="doi"
           id="doi"
-          value={doi}
-          onChange={(event) => {
-            setDoi(event.target.value);
-          }}
-        />
-
-        <label htmlFor="summary">Summary:</label>
-        <textarea
-          className={formStyles.formTextArea}
-          name="summary"
-          value={summary}
-          onChange={(event) => setSummary(event.target.value)}
+          value={article.doi}
+          onChange={onChange}
         />
 
         <button className={formStyles.formItem} type="submit">
@@ -148,4 +114,4 @@ const NewDiscussion = () => {
   );
 };
 
-export default NewDiscussion;
+export default NewArticle;
