@@ -28,9 +28,12 @@ export class Article {
   moderator_comments: string;
 
   // Analysis fields
-  @Prop({ enum: ['not_started', 'in_progress', 'completed'], default: 'not_started' })
+  @Prop({
+    enum: ['not_started', 'in_progress', 'completed'],
+    default: 'not_started',
+  })
   analysis_status: string;
-  
+
   @Prop()
   claim: string;
 
