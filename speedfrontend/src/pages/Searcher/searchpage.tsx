@@ -40,7 +40,7 @@ const SearchArticles: NextPage<SearchArticlesProps> = ({ articles }) => {
     { key: "doi", label: "DOI" },
     {key: "claim", label: "Review Comments"},
     {key: "evidence", label: "Evidence"},
-    {key: "rating", label: "Rating"},
+    {key: "rating", label: "Rating (out of 5)"},
   ];
 
   const handleSearch = () => {
