@@ -45,8 +45,6 @@ const Users: NextPage<UsersProps> = ({ users }) => {
       }
 
       const updatedUser = await response.json();
-
-      // Update local state
       setUpdatedUsers((prevUsers) =>
         prevUsers.map((user) =>
           user.username === username ? { ...user, role: updatedUser.role } : user

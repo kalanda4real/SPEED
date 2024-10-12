@@ -18,6 +18,7 @@ interface ArticlesInterface {
   claim?: string;
   evidence?: string;
   rating?: string;
+  actions?:string;
 }
 
 type ArticlesProps = {
@@ -42,6 +43,7 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
     { key: "claim", label: "Claim" },
     { key: "evidence", label: "Evidence" },
     { key: "rating", label: "Rating" },
+    { key: "actions", label: "Actions" }, // Changed to Actions
   ];
 
   // Function to handle sorting
@@ -54,6 +56,25 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
       return valA.toString().localeCompare(valB.toString());
     });
     setSortedArticles(sorted);
+  };
+
+  // Function to handle article deletion
+  const handleDelete = async (articleId: string) => {
+    try {
+      const response = await fetch(`http://localhost:8082/api/articles/${articleId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete article');
+      }
+
+      // Remove the deleted article from the list of displayed articles
+      const updatedArticles = sortedArticles.filter(article => article._id !== articleId);
+      setSortedArticles(updatedArticles);
+    } catch (error) {
+      console.error('Error deleting article:', error);
+    }
   };
 
   return (
@@ -72,11 +93,25 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
         </select>
       </div>
 
-      <SortableTable headers={headers} data={sortedArticles} />
+      <SortableTable 
+        headers={headers} 
+        data={sortedArticles.map(article => ({
+          ...article,
+          actions: (
+            <button
+              className={styles.deleteButton}
+              onClick={() => handleDelete(article._id)}
+            >
+              Delete
+            </button>
+          ),
+        }))} 
+      />
 
       <button
         className={styles.button} 
-        onClick={() => router.push('/admin/adminhome')} >
+        onClick={() => router.push('/admin/adminhome')} 
+      >
         Back to admin home
       </button>
     </div>
