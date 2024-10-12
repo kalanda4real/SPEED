@@ -33,7 +33,6 @@ jobs:
     - name: Run frontend lint
       run: npm run lint  # Linting command
 
-    # Optional: Run frontend tests
     # - name: Run frontend tests
     #   run: npm test
 
