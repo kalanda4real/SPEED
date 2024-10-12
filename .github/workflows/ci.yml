@@ -2,7 +2,7 @@ name: CI_action
 
 on:
   push:
-    branches: [main]
+    branches: [Martin-Dev]
   pull_request:
     branches: [main]
 
