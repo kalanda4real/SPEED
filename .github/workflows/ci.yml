@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  build-frontend:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -27,17 +27,47 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Install dependencies
+    - name: Install frontend dependencies
       run: npm install
-      
-    - name: Run ESLint for code quality checks
-      run: npm run lint
-      
-   # - name: Run the tests
-    #  run: npm test
 
-    - name: Build
+    - name: Run frontend lint
+      run: npm run lint  # Linting command
+
+    # Optional: Run frontend tests
+    # - name: Run frontend tests
+    #   run: npm test
+
+    - name: Build frontend
       run: npm run build
 
-    # - name: Start project
-    #   run: npm start
+  build-backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./speedbackend  # backend directory
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install backend dependencies
+      run: npm install
+
+    - name: Run backend lint
+      run: npm run lint  # Linting command for backend
+
+    - name: Run backend tests
+      run: npm test  # Run tests for backend
+
+    - name: Build backend
+      run: npm run build
