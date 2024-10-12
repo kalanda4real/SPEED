@@ -2,9 +2,9 @@ name: CI_action
 
 on:
   push:
-    branches: [Martin-Dev]
+    branches: [main]
   pull_request:
-    branches: [Martin-Dev]
+    branches: [main]
 
 jobs:
   build:
