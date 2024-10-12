@@ -74,7 +74,6 @@ export class UserService{
 
    
     async updateRoleByUsername(username: string, role: string): Promise<User> {
-        // Ensure the role is valid (optional, you can add your validation logic)
         const validRoles = ['user', 'mod', 'analyst', 'admin'];
         if (!validRoles.includes(role)) {
           throw new Error('Invalid role');
@@ -83,7 +82,7 @@ export class UserService{
         const user = await this.userModel.findOneAndUpdate(
           { username },
           { role },
-          { new: true } // Return the updated document
+          { new: true } 
         ).exec();
     
         if (!user) {

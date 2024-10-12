@@ -3,7 +3,6 @@ import { UserService } from "./user.service";
 import { CreateUserDto } from "./createuser.dto";
 import { error } from "console";
 import { LoginUserDto } from "../login/login.dto";
-import { UpdateUserRoleDto } from "./updateuser.dto";
 
 
 @Controller('api/users')
