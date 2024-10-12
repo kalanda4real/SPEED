@@ -1,6 +1,5 @@
 import styles from "@/styles/homepage.module.css";
 import Link from "next/link";
-import PopulatedNavBar from "@/components/PopulatedNavBar"; // Keep the import
 
 const HomePage = () => {
   const newArticlesCount = 0; // Placeholder value; fetch this dynamically
