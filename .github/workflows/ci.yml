@@ -29,7 +29,10 @@ jobs:
 
     - name: Install dependencies
       run: npm install
-
+      
+    - name: Run ESLint for code quality checks
+      run: npm run lint
+      
    # - name: Run the tests
     #  run: npm test
 
