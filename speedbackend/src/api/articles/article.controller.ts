@@ -7,7 +7,6 @@ import {
   HttpStatus,
   Param,
   Post,
-  Put,
   Patch,
 } from '@nestjs/common';
 import { ArticleService } from './article.service';
