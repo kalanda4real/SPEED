@@ -27,7 +27,7 @@ const HomePage = () => {
       </div>
       <footer className={styles.footer}>
         <p>
-          © 2024 Software Practice Empirical Evidence Database. By Azel, Pheobe,
+          © 2024 Software Practice Empirical Evidence Database. By Azel, Phoebe,
           Martin, Simar.
         </p>
       </footer>

@@ -12,7 +12,7 @@ export default function Home() {
       </h3>
 
       <footer className={styles.footer}>
-        <p>© 2024 Software Practice Empirical Evidence Database. By Azel Pheobe Martin Simar.</p>
+        <p>© 2024 Software Practice Empirical Evidence Database. By Azel Phoebe Martin Simar.</p>
         <a href="/Home">About Us</a>
       </footer>
     </div>
