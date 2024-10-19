@@ -11,5 +11,5 @@ export class CreateArticleDto {
   analysis_status?: 'not_started' | 'in_progress' | 'completed';
   claim?: string;
   evidence?: string;
-  rating?: string;
+  rating?: number;
 }

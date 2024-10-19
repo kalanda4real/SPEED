@@ -6,19 +6,15 @@ import styles from "@/styles/homepage.module.css";
 interface ArticleInterface {
   author: string;
   title: string;
-  journal?: string;
-  year?: string;
-  volume?: string;
-  number?: string;
-  pages?: string;
-  doi?: string;
+  source: string;
+  year: string;
+  doi: string;
   moderation_status?: string;
   moderator_comments?: string;
-  submitter_name: string;
-  submitter_email: string;
-  submitted_date?: string;
   analysis_status?: string;
-  analysis_notes?: string;
+  claim?: string;
+  evidence?: string;
+  rating?: number;
 }
 
 type NewArticlesPageProps = {
@@ -31,7 +27,7 @@ const NewArticlesPage: React.FC<NewArticlesPageProps> = ({ articles }) => {
   const headers = [
     { key: "title", label: "Title" },
     { key: "author", label: "Author" },
-    { key: "journal", label: "Journal" },
+    { key: "source", label: "Source" },
     { key: "year", label: "Year" },
   ];
 

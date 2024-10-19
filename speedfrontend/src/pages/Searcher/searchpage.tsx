@@ -1,6 +1,6 @@
 import { GetStaticProps, NextPage } from "next";
 import { useState } from "react";
-import SortableTable from '@/components/table/SortableTable';
+import SearchTable from "@/components/table/SearchTable";
 import styles from '@/styles/search.module.scss';
 
 interface ArticlesInterface {
@@ -16,7 +16,7 @@ interface ArticlesInterface {
   analysis_notes?: string;
   claim?: string;
   evidence?: string;
-  rating?: string;
+  rating?: number;
 }
 
 type SearchArticlesProps = {
@@ -31,6 +31,25 @@ const SearchArticles: NextPage<SearchArticlesProps> = ({ articles }) => {
 
   // Start with the approved articles in the filtered list
   const [filteredArticles, setFilteredArticles] = useState<ArticlesInterface[]>(approvedArticles);
+
+  // This will handle rating changes for each article
+  const handleRatingChange = async (articleId: string, rating: number) => {
+    try {
+      const response = await fetch(`/api/articles/${articleId}/rate`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rating }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update rating');
+      }
+
+      console.log('Rating updated successfully');
+    } catch (error) {
+      console.error('Error updating rating:', error);
+    }
+  };
 
   const headers = [
     { key: "title", label: "Title" },
@@ -67,9 +86,10 @@ const SearchArticles: NextPage<SearchArticlesProps> = ({ articles }) => {
       </div>
 
       {/* Use filteredArticles instead of approvedArticles */}
-      <SortableTable
+      <SearchTable
         headers={headers}
         data={filteredArticles} // This now shows the filtered results
+        onRatingChange={handleRatingChange} // Pass the rating change handler
       />
     </div>
   );

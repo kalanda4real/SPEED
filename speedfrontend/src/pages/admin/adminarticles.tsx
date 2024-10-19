@@ -17,7 +17,7 @@ interface ArticlesInterface {
   analysis_notes?: string;
   claim?: string;
   evidence?: string;
-  rating?: string;
+  rating?: number;
   actions?:string;
 }
 

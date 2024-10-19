@@ -38,8 +38,8 @@ export class Article {
   @Prop()
   evidence: string;
 
-  @Prop()
-  rating: string;
+  @Prop({default: 0})
+  rating: number;
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);

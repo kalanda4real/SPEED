@@ -8,19 +8,15 @@ import { GetStaticProps } from "next";
 interface PastArticleInterface {
   author: string;
   title: string;
-  journal?: string;
-  year?: string;
-  volume?: string;
-  number?: string;
-  pages?: string;
-  doi?: string;
+  source: string;
+  year: string;
+  doi: string;
   moderation_status?: string;
   moderator_comments?: string;
-  submitter_name: string;
-  submitter_email: string;
-  submitted_date?: string;
   analysis_status?: string;
-  analysis_notes?: string;
+  claim?: string;
+  evidence?: string;
+  rating?: number;
 }
 
 // Define the component props type
@@ -41,13 +37,9 @@ const PastReviewedArticlesPage: React.FC<PastReviewedArticlesPageProps> = ({
   const headers: { key: keyof PastArticleInterface; label: string }[] = [
     { key: "title", label: "Title" },
     { key: "author", label: "Author" },
-    { key: "journal", label: "Journal" },
+    { key: "source", label: "Source" },
     { key: "year", label: "Publication Year" },
-    { key: "volume", label: "Volume" },
-    { key: "number", label: "Number" },
-    { key: "pages", label: "Pages" },
     { key: "doi", label: "DOI" },
-    { key: "submitted_date", label: "Submitted Date" },
   ];
 
   // Handle sorting

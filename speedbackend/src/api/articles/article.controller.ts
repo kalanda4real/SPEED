@@ -12,6 +12,7 @@ import {
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './createarticle.dto';
 import { error } from 'console';
+import { UpdateRatingDto } from './updaterating.dto';
 
 @Controller('api/articles')
 export class ArticleController {
@@ -94,6 +95,40 @@ export class ArticleController {
         {
           status: HttpStatus.BAD_REQUEST,
           error: 'Unable to update this article',
+        },
+        HttpStatus.BAD_REQUEST,
+        { cause: error },
+      );
+    }
+  }
+
+  // New endpoint to update article rating
+  @Patch('/:id/rate')
+  async rateArticle(
+    @Param('id') id: string,
+    @Body() updateRatingDto: UpdateRatingDto, // New DTO for rating updates
+  ) {
+    const { rating } = updateRatingDto;
+
+    if (!rating || rating < 1 || rating > 5) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Invalid rating. It must be between 1 and 5.',
+        },
+        HttpStatus.BAD_REQUEST,
+        { cause: error },
+      );
+    }
+
+    try {
+      await this.articleService.updateRating(id, rating);
+      return { message: 'Rating updated successfully' };
+    } catch {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Unable to update the rating',
         },
         HttpStatus.BAD_REQUEST,
         { cause: error },

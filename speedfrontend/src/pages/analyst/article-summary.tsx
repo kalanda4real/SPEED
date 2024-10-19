@@ -5,19 +5,15 @@ import styles from "@/styles/homepage.module.css";
 interface ArticleInterface {
   author: string;
   title: string;
-  journal?: string;
-  year?: string;
-  volume?: string;
-  number?: string;
-  pages?: string;
-  doi?: string;
+  source: string;
+  year: string;
+  doi: string;
   moderation_status?: string;
   moderator_comments?: string;
-  submitter_name: string;
-  submitter_email: string;
-  submitted_date?: string;
   analysis_status?: string;
-  analysis_notes?: string;
+  claim?: string;
+  evidence?: string;
+  rating?: number;
 }
 
 const ArticleSummaryPage: React.FC = () => {
