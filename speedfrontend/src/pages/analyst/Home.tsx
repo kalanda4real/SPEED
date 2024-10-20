@@ -2,8 +2,6 @@ import styles from "@/styles/homepage.module.css";
 import Link from "next/link";
 
 const HomePage = () => {
-  const newArticlesCount = 0; // Placeholder value; fetch this dynamically
-
   return (
     <div className={styles.container}>
       {/* PopulatedNavBar is imported but not rendered */}
@@ -21,9 +19,7 @@ const HomePage = () => {
         </Link>
       </div>
       <div className={styles.counterBox}>
-        <h4>
-          New Articles: <span id="newArticlesCount">{newArticlesCount}</span>
-        </h4>
+        <h4></h4>
       </div>
       <footer className={styles.footer}>
         <p>

@@ -1,103 +1,59 @@
-import { useState } from "react";
 import { useRouter } from "next/router";
 import styles from "@/styles/homepage.module.css";
 import SortableTable from "@/components/table/SortableTable";
-import { GetStaticProps } from "next";
+import { useState, useEffect } from "react";
 
-// Define the interface for articles
-interface PastArticleInterface {
-  author: string;
-  title: string;
-  journal?: string;
-  year?: string;
-  volume?: string;
-  number?: string;
-  pages?: string;
-  doi?: string;
-  moderation_status?: string;
-  moderator_comments?: string;
-  submitter_name: string;
-  submitter_email: string;
-  submitted_date?: string;
-  analysis_status?: string;
-  analysis_notes?: string;
+// Interface for reviewed articles
+interface ReviewedArticleInterface {
+  article: {
+    id: string;
+    title: string;
+    author: string;
+    year?: string;
+  };
+  comment: string; // Analysis comment associated with the article
 }
 
-// Define the component props type
+// Props for PastReviewedArticlesPage
 type PastReviewedArticlesPageProps = {
-  pastArticles: PastArticleInterface[];
+  reviewedArticles: ReviewedArticleInterface[];
 };
 
-const PastReviewedArticlesPage: React.FC<PastReviewedArticlesPageProps> = ({
-  pastArticles,
-}) => {
+const PastReviewedArticlesPage: React.FC<
+  PastReviewedArticlesPageProps
+> = () => {
   const router = useRouter();
-  const [sortOption, setSortOption] =
-    useState<keyof PastArticleInterface>("title");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [sortedArticles, setSortedArticles] = useState(pastArticles);
+  const [sortedArticles, setSortedArticles] = useState<
+    ReviewedArticleInterface[]
+  >([]);
 
-  // Headers for the table
-  const headers: { key: keyof PastArticleInterface; label: string }[] = [
+  // Fetch reviewed articles from local storage
+  useEffect(() => {
+    const savedReviewedArticles = localStorage.getItem("reviewedArticles");
+    if (savedReviewedArticles) {
+      setSortedArticles(JSON.parse(savedReviewedArticles));
+    }
+  }, []);
+
+  const headers = [
     { key: "title", label: "Title" },
     { key: "author", label: "Author" },
-    { key: "journal", label: "Journal" },
-    { key: "year", label: "Publication Year" },
-    { key: "volume", label: "Volume" },
-    { key: "number", label: "Number" },
-    { key: "pages", label: "Pages" },
-    { key: "doi", label: "DOI" },
-    { key: "submitted_date", label: "Submitted Date" },
+    { key: "year", label: "Year" },
+    { key: "comment", label: "Analysis Comment" }, // Display analysis comment
   ];
 
-  // Handle sorting
-  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedOption = e.target.value as keyof PastArticleInterface;
-    setSortOption(selectedOption);
-    const sorted = [...pastArticles].sort((a, b) => {
-      const valA = a[selectedOption] || "";
-      const valB = b[selectedOption] || "";
-      return valA.toString().localeCompare(valB.toString());
-    });
-    setSortedArticles(sorted);
-  };
-
-  // Handle search functionality
-  const handleSearch = () => {
-    const filteredArticles = pastArticles.filter(
-      (article) =>
-        article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        article.author.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setSortedArticles(filteredArticles);
-  };
+  // Map the sorted articles to include the title and other details
+  const tableData = sortedArticles.map(({ article, comment }) => ({
+    title: article.title,
+    author: article.author,
+    year: article.year,
+    comment,
+  }));
 
   return (
     <div className={styles.container}>
-      <h1>Past Articles</h1>
-      <div className={styles.controls}>
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search past articles"
-          className={styles.searchInput}
-        />
-        <button onClick={handleSearch} className={styles.button}>
-          Search
-        </button>
-
-        <label htmlFor="sort">Sort by: </label>
-        <select id="sort" value={sortOption} onChange={handleSortChange}>
-          {headers.map((header) => (
-            <option key={header.key} value={header.key}>
-              {header.label}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <SortableTable headers={headers} data={sortedArticles} />
+      <h1>Reviewed Articles</h1>
+      <SortableTable headers={headers} data={tableData} />
 
       <button
         className={styles.button}
@@ -107,35 +63,6 @@ const PastReviewedArticlesPage: React.FC<PastReviewedArticlesPageProps> = ({
       </button>
     </div>
   );
-};
-
-// Sample getStaticProps function if you're fetching articles data
-export const getStaticProps: GetStaticProps<
-  PastReviewedArticlesPageProps
-> = async () => {
-  try {
-    const response = await fetch("http://localhost:8082/api/past-articles"); // Change to your API endpoint
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch past articles");
-    }
-
-    const pastArticles = await response.json();
-
-    return {
-      props: {
-        pastArticles,
-      },
-      revalidate: 60, // Revalidate every 60 seconds
-    };
-  } catch (error) {
-    console.error("Error fetching past articles:", error);
-    return {
-      props: {
-        pastArticles: [],
-      },
-    };
-  }
 };
 
 export default PastReviewedArticlesPage;
