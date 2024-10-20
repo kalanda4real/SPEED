@@ -5,17 +5,17 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './api/users/user.module';
 import { ArticleModule } from './api/articles/article.module';
-import { JwtModule } from "@nestjs/jwt";
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
-    UserModule, 
+    UserModule,
     JwtModule.register({
-      secret: 'SPEED', 
+      secret: 'SPEED',
       signOptions: { expiresIn: '1h' },
     }),
-    ConfigModule.forRoot(), 
-    MongooseModule.forRoot(process.env.DB_URI), 
+    ConfigModule.forRoot(),
+    MongooseModule.forRoot(process.env.DB_URI),
     UserModule,
     ArticleModule,
   ],

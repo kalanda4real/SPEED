@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Date, HydratedDocument } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 
 export type ArticleDocument = HydratedDocument<Article>;
 
@@ -20,14 +20,12 @@ export class Article {
   @Prop({ required: true })
   doi: string;
 
-  // Moderation fields
   @Prop({ enum: ['pending', 'approved', 'rejected'], default: 'pending' })
   moderation_status: string;
 
   @Prop()
   moderator_comments: string;
 
-  // Analysis fields
   @Prop({
     enum: ['not_started', 'in_progress', 'completed'],
     default: 'not_started',

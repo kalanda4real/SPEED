@@ -1,7 +1,7 @@
 import { GetStaticProps, NextPage } from "next";
 import SortableTable from "@/components/table/SortableTable";
 import styles from '@/styles/articles.module.css';
-import { useRouter } from "next/router";
+
 
 interface ArticlesInterface {
   _id: string;
@@ -24,7 +24,7 @@ type ArticlesProps = {
 };
 
 const Articles: NextPage<ArticlesProps> = ({ articles }) => {
-  const router = useRouter();
+
   
   // Filter articles to only include approved ones
   const approvedArticles = articles.filter(article => article.moderation_status === 'approved');

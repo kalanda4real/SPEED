@@ -6,7 +6,9 @@ import { CreateArticleDto } from './createarticle.dto';
 
 @Injectable()
 export class ArticleService {
-  constructor(@InjectModel(Article.name) private articleModel: Model<Article>) {}
+  constructor(
+    @InjectModel(Article.name) private articleModel: Model<Article>,
+  ) {}
 
   test(): string {
     return 'article route testing';

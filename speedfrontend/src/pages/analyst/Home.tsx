@@ -1,6 +1,5 @@
 import styles from "@/styles/homepage.module.css";
 import Link from "next/link";
-import PopulatedNavBar from "@/components/PopulatedNavBar"; // Keep the import
 
 const HomePage = () => {
   const newArticlesCount = 4;
@@ -28,7 +27,7 @@ const HomePage = () => {
       </div>
       <footer className={styles.footer}>
         <p>
-          © 2024 Software Practice Empirical Evidence Database. By Azel, Pheobe,
+          © 2024 Software Practice Empirical Evidence Database. By Azel, Phoebe,
           Martin, Simar.
         </p>
       </footer>

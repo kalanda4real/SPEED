@@ -25,11 +25,10 @@ type SearchArticlesProps = {
 
 const SearchArticles: NextPage<SearchArticlesProps> = ({ articles }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortOption, setSortOption] = useState<keyof ArticlesInterface>("title");
   
   // Filter the approved articles once
   const approvedArticles = articles.filter(article => article.moderation_status === 'approved');
-
-  // Start with the approved articles in the filtered list
   const [filteredArticles, setFilteredArticles] = useState<ArticlesInterface[]>(approvedArticles);
 
   const headers = [
@@ -40,36 +39,66 @@ const SearchArticles: NextPage<SearchArticlesProps> = ({ articles }) => {
     { key: "doi", label: "DOI" },
     {key: "claim", label: "Review Comments"},
     {key: "evidence", label: "Evidence"},
-    {key: "rating", label: "Rating"},
+    {key: "rating", label: "Rating (out of 5)"},
   ];
 
-  const handleSearch = () => {
+  // Search by title, author, or evidence
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchTerm = e.target.value.toLowerCase();
+    setSearchTerm(searchTerm);
     const filtered = approvedArticles.filter(article =>
-      article.title.toLowerCase().includes(searchTerm.toLowerCase())
+      article.title.toLowerCase().includes(searchTerm) ||
+      article.author.toLowerCase().includes(searchTerm) ||
+      article.year?.toLowerCase().includes(searchTerm)||
+      article.source?.toLowerCase().includes(searchTerm)
     );
-    setFilteredArticles(filtered); // Update the table with filtered results
+    setFilteredArticles(filtered); 
   };
+
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedOption = e.target.value as keyof ArticlesInterface;
+    setSortOption(selectedOption);
+    const sorted = [...filteredArticles].sort((a, b) => {
+      
+      if (selectedOption === "rating") {
+        const ratingA = parseFloat(a.rating || "0"); 
+        const ratingB = parseFloat(b.rating || "0"); 
+        return ratingB - ratingA; 
+      } else {
+        const valA = a[selectedOption]?.toString() || ""; 
+        const valB = b[selectedOption]?.toString() || "";
+        return valA.localeCompare(valB); 
+      }
+    });
+    setFilteredArticles(sorted); 
+  };
+  
 
   return (
     <div className={styles.container}>
       <h1>Search Articles</h1>
       <div className={styles.searchContainer}>
-        <input
+        <input  
           type="text"
-          placeholder="Search by title..."
+          placeholder="Search by title, author, source, or pub-year..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={handleSearch} 
           className={styles.searchInput}
         />
-        <button onClick={handleSearch} className={styles.searchButton}>
-          Search
-        </button>
       </div>
-
-      {/* Use filteredArticles instead of approvedArticles */}
+      <div className={styles.controls}>
+        <label htmlFor="sort">Sort by: </label>
+        <select id="sort" value={sortOption} onChange={handleSortChange}>
+          {headers.map(header => (
+            <option key={header.key} value={header.key}>
+              {header.label}
+            </option>
+          ))}
+        </select>
+      </div>
       <SortableTable
         headers={headers}
-        data={filteredArticles} // This now shows the filtered results
+        data={filteredArticles} 
       />
     </div>
   );
