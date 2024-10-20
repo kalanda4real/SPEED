@@ -9,7 +9,6 @@ interface ReviewedArticleInterface {
     id: string;
     title: string;
     author: string;
-    journal?: string;
     year?: string;
   };
   comment: string; // Analysis comment associated with the article
@@ -39,7 +38,6 @@ const PastReviewedArticlesPage: React.FC<
   const headers = [
     { key: "title", label: "Title" },
     { key: "author", label: "Author" },
-    { key: "journal", label: "Journal" },
     { key: "year", label: "Year" },
     { key: "comment", label: "Analysis Comment" }, // Display analysis comment
   ];
@@ -48,7 +46,6 @@ const PastReviewedArticlesPage: React.FC<
   const tableData = sortedArticles.map(({ article, comment }) => ({
     title: article.title,
     author: article.author,
-    journal: article.journal,
     year: article.year,
     comment,
   }));

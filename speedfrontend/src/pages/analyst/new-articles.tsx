@@ -9,10 +9,8 @@ interface ArticleInterface {
   id: string;
   title: string;
   author: string;
-  journal?: string;
   year?: string;
-  submitter_name: string;
-  submitter_email: string;
+  doi?: string;
 }
 
 // Props for NewArticlesPage
@@ -90,8 +88,8 @@ const NewArticlesPage: React.FC<NewArticlesPageProps> = ({ articles }) => {
         headers={[
           { key: "title", label: "Title" },
           { key: "author", label: "Author" },
-          { key: "journal", label: "Journal" },
           { key: "year", label: "Year" },
+          { key: "doi", label: "DOI" },
         ]}
         data={tableData}
       />
